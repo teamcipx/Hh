@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Message": {
+      "title": "Message",
+      "description": "An encrypted text, image, or voice message",
+      "type": "object",
+      "properties": {
+        "sender": { "type": "string" },
+        "text": { "type": "string" },
+        "audioUrl": { "type": "string" },
+        "audioDuration": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "fileName": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "hasAttachment": { "type": "boolean" },
+        "seen": { "type": "boolean" },
+        "reactions": { "type": "object" }
+      },
+      "required": ["sender", "text", "hasAttachment", "seen"]
+    },
+    "UserStatus": {
+      "title": "UserStatus",
+      "description": "Online status and typing activity",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "status": { "type": "string" },
+        "lastActive": { "type": "string", "format": "date-time" },
+        "isTyping": { "type": "boolean" }
+      },
+      "required": ["uid", "status"]
+    },
+    "SharedConfig": {
+      "title": "SharedConfig",
+      "description": "Shared visual paper texture and nickname configs",
+      "type": "object",
+      "properties": {
+        "paperTexture": { "type": "string" },
+        "nicknames": { "type": "object" }
+      }
+    }
+  },
+  "firestore": {
+    "messages": {
+      "schema": "Message",
+      "description": "All chat messages"
+    },
+    "user_status": {
+      "schema": "UserStatus",
+      "description": "User online/offline and typing status"
+    },
+    "settings": {
+      "schema": "SharedConfig",
+      "description": "Shared configurations like nicknames and visual theme"
+    }
+  }
+}

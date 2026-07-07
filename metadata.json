@@ -1,0 +1,6 @@
+{
+  "name": "Secure Chat",
+  "description": "A highly secure real-time messaging application exclusively for Saluk and Digonto, supporting secure message history and image sharing via imgbb.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

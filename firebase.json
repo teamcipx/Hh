@@ -1,0 +1,6 @@
+{
+  "firestore": {
+    "database": "ai-studio-securechat-14ca1f26-3d47-4813-a06c-77f9c2501203",
+    "rules": "firestore.rules"
+  }
+}

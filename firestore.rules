@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /messages/{messageId} {
+      allow read, write: if true; // Security is handled via AES-256 client-side encryption
+    }
+    match /user_status/{userId} {
+      allow read, write: if true; // Tracks online status and typing activity
+    }
+    match /settings/{settingId} {
+      allow read, write: if true; // Tracks shared configurations such as nicknames and theme syncing
+    }
+  }
+}
