@@ -65,58 +65,65 @@
 
 /* Texture 1: Aged Parchment */
 .texture-parchment {
-  background-color: #fdfbf7;
+  background-color: #faf5eb;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5), rgba(245, 239, 224, 0.35)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath fill='%23d8c39e' fill-opacity='0.2' d='M0 2h1v1H0zm3 2h1v1H3zm1-3h1v1H4z'%3E%3C/path%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(212, 192, 153, 0.25)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23b49e7a' fill-opacity='0.08' d='M0 0h1v16H0zm15 0h1v16h-1zM0 0h16v1H0zm0 15h16v1H0z'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 40px rgba(139, 92, 26, 0.15);
 }
 
 /* Texture 2: Blue Airmail Envelope */
 .texture-airmail {
-  background-color: #e4eef6;
+  background-color: #f0f6fa;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6), rgba(197, 213, 231, 0.4)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg fill='%232563eb' fill-opacity='0.04'%3E%3Crect width='20' height='1' y='9'/%3E%3Crect width='1' height='20' x='9'/%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5), rgba(186, 210, 230, 0.3)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath fill='%232563eb' fill-opacity='0.03' d='M0 0h40v1H0zm0 19h40v1H0zM19 0v40h1V0zm19 0v40h1V0z'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 40px rgba(37, 99, 235, 0.08);
 }
 
 /* Texture 3: Telegram Paper */
 .texture-telegram {
-  background-color: #f3e8d2;
+  background-color: #f7eed7;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(215, 201, 175, 0.45)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='%23854d0e' fill-opacity='0.05'%3E%3Crect width='32' height='1' y='15'/%3E%3Crect width='32' height='1' y='31'/%3E%3Crect width='1' height='32' x='15'/%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(220, 201, 161, 0.35)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='%23854d0e' fill-opacity='0.04'%3E%3Crect width='64' height='1' y='31'/%3E%3Crect width='1' height='64' x='31'/%3E%3C/g%3E%3C/svg%3E");
+  box-shadow: inset 0 0 35px rgba(133, 77, 14, 0.1);
 }
 
 /* Texture 4: Royal Velvet */
 .texture-velvet {
-  background-color: #4a0d0d;
+  background-color: #2e0505;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.4), rgba(42, 6, 6, 0.8)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23b91c1c' fill-opacity='0.15' d='M0 0h6v6H0z'/%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 30%, rgba(157, 23, 23, 0.45), rgba(20, 2, 2, 0.95)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath fill='%23ca8a04' fill-opacity='0.04' d='M18 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.6);
 }
 
 /* Texture 5: Forest Moss */
 .texture-forest {
-  background-color: #1c352d;
+  background-color: #0b1a15;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(46, 85, 71, 0.5), rgba(15, 30, 25, 0.85)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%2310b981' fill-opacity='0.08' d='M12 0l3 6H9l3-6zm0 24l3-6H9l3 6zM0 12l6-3v6l-6-3zm24 0l-6-3v6l6-3z'/%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 30%, rgba(20, 56, 44, 0.55), rgba(6, 15, 12, 0.96)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath fill='%2310b981' fill-opacity='0.03' d='M24 8l4 8h-8l4-8zm0 32l4-8h-8l4 8zm-16-16l8-4v8l-8-4zm32 0l-8-4v8l8-4z'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.65);
 }
 
 /* Texture 6: Midnight Celestial */
 .texture-midnight {
-  background-color: #0f172a;
+  background-color: #050b18;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.5), rgba(2, 6, 23, 0.95)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%236366f1' fill-opacity='0.3'/%3E%3Ccircle cx='5' cy='10' r='0.75' fill='%23ffffff' fill-opacity='0.25'/%3E%3Ccircle cx='35' cy='30' r='0.5' fill='%23fef08a' fill-opacity='0.4'/%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 40%, rgba(26, 32, 77, 0.6), rgba(2, 4, 12, 0.98)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='1.25' fill='%23818cf8' fill-opacity='0.4'/%3E%3Ccircle cx='10' cy='20' r='0.75' fill='%23ffffff' fill-opacity='0.3'/%3E%3Ccircle cx='70' cy='60' r='0.5' fill='%23fef08a' fill-opacity='0.45'/%3E%3Ccircle cx='30' cy='15' r='0.5' fill='%23ffffff' fill-opacity='0.2'/%3E%3Ccircle cx='60' cy='25' r='0.75' fill='%23a5f3fc' fill-opacity='0.35'/%3E%3Ccircle cx='20' cy='65' r='1' fill='%23f472b6' fill-opacity='0.25'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.7);
 }
 
 /* Texture 7: Vintage Rose */
 .texture-rose {
-  background-color: #fcf1f2;
+  background-color: #fdf5f6;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.7), rgba(244, 219, 222, 0.45)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath fill='%23ec4899' fill-opacity='0.05' d='M15 0a15 15 0 000 30 15 15 0 000-30zm0 5a10 10 0 110 20 10 10 0 010-20z'/%3E%3C/svg%3E");
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6), rgba(246, 210, 215, 0.4)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath fill='%23db2777' fill-opacity='0.03' d='M24 4c11 0 20 9 20 20S35 44 24 44 4 35 4 24 13 4 24 4zm0 4C15.1 8 8 15.1 8 24s7.1 16 16 16 16-7.1 16-16S32.9 8 24 8z'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 40px rgba(219, 39, 119, 0.08);
 }
 
 /* Elegant handwriting block */

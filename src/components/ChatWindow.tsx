@@ -176,6 +176,49 @@ export default function ChatWindow({ currentUser, onLogout }: ChatWindowProps) {
   const typingTimeoutRef = useRef<any>(null);
   const lastMessagesCountRef = useRef<number | null>(null);
 
+  // Browser notification permissions
+  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      return window.Notification.permission;
+    }
+    return "default";
+  });
+
+  const requestNotificationPermission = async () => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      try {
+        const permission = await window.Notification.requestPermission();
+        setNotificationPermission(permission);
+        if (permission === "granted") {
+          if (notificationSound === "postal") {
+            playPostalChime();
+          } else {
+            playSmsSound();
+          }
+          new window.Notification("ডাকঘর (Dakghor)", {
+            body: "ব্রাউজার নোটিফিকেশন সফলভাবে চালু করা হয়েছে!",
+            icon: "/favicon.ico",
+          });
+        }
+      } catch (err) {
+        console.error("Error requesting notification permission:", err);
+      }
+    }
+  };
+
+  // Gently auto-request browser notification permission on mount if default
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window && window.Notification.permission === "default") {
+      // Delay slightly so the UI is fully loaded first
+      const timer = setTimeout(() => {
+        window.Notification.requestPermission().then((permission) => {
+          setNotificationPermission(permission);
+        }).catch((err) => console.log("Gently requesting notification permission rejected/ignored:", err));
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   // Voice recording states
   const [isRecording, setIsRecording] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
@@ -487,17 +530,42 @@ export default function ChatWindow({ currentUser, onLogout }: ChatWindowProps) {
               const isVoice = !!lastMsg.audioUrl;
               
               // Set the active top sliding airmail notification banner
+              const notificationText = isVoice
+                ? "একটি ভয়েস মেসেজ পাঠিয়েছেন (Sent a voice message)"
+                : lastMsg.text || "ছবি সংযুক্ত করা হয়েছে (Image attached)";
+
               setActiveNotification({
                 sender: lastMsg.sender,
-                text: isVoice
-                  ? "একটি ভয়েস মেসেজ পাঠিয়েছেন (Sent a voice message)"
-                  : lastMsg.text || "ছবি সংযুক্ত করা হয়েছে (Image attached)"
+                text: notificationText
               });
+
+              // Trigger Native Browser Notification when tab is inactive
+              const isTabInactive = typeof document !== "undefined" && (document.hidden || !document.hasFocus());
+              if (isTabInactive && typeof window !== "undefined" && "Notification" in window && window.Notification.permission === "granted") {
+                const partnerName = sharedConfig.nicknames?.[lastMsg.sender] || lastMsg.sender;
+                const notificationTitle = `${partnerName} থেকে নতুন চিঠি`;
+                const notificationBody = isVoice 
+                  ? "একটি ভয়েস মেসেজ পাঠিয়েছেন" 
+                  : (lastMsg.text && lastMsg.text !== "[ভয়েস বার্তা (Voice Message)]" ? lastMsg.text : "ছবি সংযুক্ত করা হয়েছে");
+                  
+                try {
+                  const notification = new window.Notification(notificationTitle, {
+                    body: notificationBody,
+                    icon: "/favicon.ico",
+                  });
+                  notification.onclick = () => {
+                    window.focus();
+                    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+                  };
+                } catch (err) {
+                  console.error("Error showing browser notification:", err);
+                }
+              }
               
               // Clear notification after 4.5 seconds
               setTimeout(() => {
                 setActiveNotification((prev) => {
-                  if (prev && prev.sender === lastMsg.sender && prev.text === (lastMsg.text || "ছবি সংযুক্ত করা হয়েছে (Image attached)")) {
+                  if (prev && prev.sender === lastMsg.sender && prev.text === notificationText) {
                     return null;
                   }
                   return prev;
@@ -1017,7 +1085,7 @@ export default function ChatWindow({ currentUser, onLogout }: ChatWindowProps) {
                       setText(e.target.value);
                       handleTyping();
                     }}
-                    placeholder={`${partnerUserDisplayName} এর নিকট গোপনীয় চিঠি লিখুন...`}
+                    placeholder="মেসেজ পাঠান..."
                     disabled={isUploading}
                     className="flex-1 bg-white border border-parchment-border focus:border-postal-red rounded-2xl py-3.5 px-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-postal-red/10 transition-all font-sans text-sm tracking-wide shadow-sm"
                   />
@@ -1330,6 +1398,65 @@ export default function ChatWindow({ currentUser, onLogout }: ChatWindowProps) {
                           <div className="w-4 h-4 rounded-full bg-postal-red flex items-center justify-center text-white text-[9px] font-bold shrink-0">✓</div>
                         )}
                       </button>
+                    </div>
+                  </div>
+
+                  {/* Browser Notification Status Card */}
+                  <div className="bg-white border border-parchment-border/80 rounded-2xl p-4 shadow-sm space-y-3">
+                    <div className="flex items-center gap-2 pb-2.5 border-b border-slate-100">
+                      <Bell className="w-4.5 h-4.5 text-postal-red" />
+                      <div>
+                        <h4 className="font-serif font-bold text-xs text-slate-800 uppercase tracking-wider">ব্রাউজার নোটিফিকেশন</h4>
+                        <p className="text-[10px] text-slate-400">মেসেজ আসলে পুশ নোটিফিকেশন পাবেন</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 bg-slate-50 border border-slate-100 rounded-lg p-2">
+                        <span>স্থিতি (Status):</span>
+                        <span className={`font-semibold ${
+                          notificationPermission === "granted"
+                            ? "text-emerald-600"
+                            : notificationPermission === "denied"
+                            ? "text-postal-red"
+                            : "text-amber-600"
+                        }`}>
+                          {notificationPermission === "granted" && "অনুমতি দেওয়া আছে (Allowed)"}
+                          {notificationPermission === "denied" && "ব্লক করা (Blocked)"}
+                          {notificationPermission === "default" && "অনুমতি চাওয়া হয়নি (Not Requested)"}
+                        </span>
+                      </div>
+
+                      {notificationPermission !== "granted" && (
+                        <button
+                          onClick={requestNotificationPermission}
+                          className="w-full py-2 px-4 rounded-xl font-medium text-[11px] flex items-center justify-center gap-1.5 cursor-pointer bg-postal-blue hover:bg-postal-darkblue text-white transition-all shadow-xs"
+                        >
+                          <Bell className="w-3.5 h-3.5 animate-bounce" />
+                          <span>নোটিফিকেশন সক্রিয় করুন</span>
+                        </button>
+                      )}
+
+                      {notificationPermission === "granted" && (
+                        <button
+                          onClick={() => {
+                            if (notificationSound === "postal") {
+                              playPostalChime();
+                            } else {
+                              playSmsSound();
+                            }
+                            if (typeof window !== "undefined" && "Notification" in window) {
+                              new window.Notification("ডাকঘর (Dakghor)", {
+                                body: "পরীক্ষামূলক নোটিফিকেশন! আপনার ডাকঘর সচল রয়েছে।",
+                                icon: "/favicon.ico"
+                              });
+                            }
+                          }}
+                          className="w-full py-2 px-4 rounded-xl font-medium text-[11px] flex items-center justify-center gap-1.5 cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all border border-slate-200"
+                        >
+                          <span>টেস্ট নোটিফিকেশন ও সাউন্ড পাঠান</span>
+                        </button>
+                      )}
                     </div>
                   </div>
 
